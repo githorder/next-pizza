@@ -75,7 +75,7 @@ const RangeSlider = React.forwardRef(
                 {formatLabel ? formatLabel(value) : value}
               </span>
             </div>
-            <SliderPrimitive.Thumb className="block border-primary/50 bg-white disabled:opacity-50 shadow border rounded-full focus-visible:ring-1 focus-visible:ring-ring w-4 h-4 transition-colors disabled:pointer-events-none focus-visible:outline-none" />
+            <SliderPrimitive.Thumb className="block border-primary/50 bg-white disabled:opacity-50 shadow border rounded-full focus-visible:ring-1 focus-visible:ring-ring w-4 h-4 transition-colors cursor-pointer disabled:pointer-events-none focus-visible:outline-none" />
           </React.Fragment>
         ))}
       </SliderPrimitive.Root>

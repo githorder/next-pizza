@@ -8,3 +8,4 @@ export { Filters } from "./filters";
 export { FilterCheckbox } from "./filter-checkbox";
 export { RangeSlider } from "./range-slider";
 export { FilterCheckoxGroup } from "./filter-checkbox-group";
+export { ProductCard } from "./product-card";
