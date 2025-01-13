@@ -7,7 +7,7 @@ import { Title } from "./title";
 import { Button } from "../ui";
 import { Plus } from "lucide-react";
 
-interface Props {
+export interface ProductCardProps {
   id: string;
   name: string;
   price: number;
@@ -15,7 +15,7 @@ interface Props {
   className?: string;
 }
 
-export const ProductCard: React.FC<Props> = ({
+export const ProductCard: React.FC<ProductCardProps> = ({
   id,
   name,
   price,
@@ -23,17 +23,20 @@ export const ProductCard: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <div className={cn("", className)}>
+    <div className={cn("group", className)}>
       <Link href={`product/${id}`}>
         <div className="flex justify-center items-center bg-secondary p-6 rounded-lg h-[260px]">
-          <img alt={name} src={imageUrl} className="w-[215px] h-[215px]" />
+          <img
+            alt={name}
+            src={imageUrl}
+            className="w-[215px] h-[215px] transition group-hover:translate-y-1"
+          />
         </div>
 
         <Title size="sm" text={name} className="mt-3 mb-1 font-bold" />
 
         <p className="text-gray-400 text-sm">
-          Цыпленок, моцарелла, сыры чеддер и пармезан, сырный соус, томаты, соус
-          альфредо, чеснок
+          Томатный соус, увеличенная порция моцареллы, томаты, итальянские травы
         </p>
 
         <div className="flex justify-between items-center mt-4">
