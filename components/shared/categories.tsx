@@ -31,6 +31,7 @@ export const Categories: React.FC<Props> = ({ className }) => {
       {cats.map(({ id, name }, index) => {
         return (
           <a
+            href={`/#${name}`}
             key={index}
             className={cn(
               "flex items-center px-5 rounded-2xl font-bold h-11",
