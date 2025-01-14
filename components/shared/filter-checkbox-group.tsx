@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { FilterChecboxProps, FilterCheckbox } from "./filter-checkbox";
 
-import { Input } from "../ui";
+import { Input, Skeleton } from "../ui";
 
 type Item = FilterChecboxProps;
 
@@ -16,19 +16,23 @@ interface Props {
   defaultItems: Item[];
   limit?: number;
   searchInputPlaceholer?: string;
-  onChange?: (values: string[]) => void;
+  onClickCheckbox?: (id: string) => void;
   defaultValue?: string[];
   className?: string;
+  name: string;
+  selectedIds: Set<string>;
 }
 
 export const FilterCheckoxGroup: React.FC<Props> = ({
   title,
+  name,
   items,
   defaultItems,
   limit = 5,
   searchInputPlaceholer = "Поиск...",
-  onChange,
+  onClickCheckbox,
   defaultValue,
+  selectedIds,
   className,
 }) => {
   const [showAll, setShowAll] = React.useState(false);
@@ -42,6 +46,23 @@ export const FilterCheckoxGroup: React.FC<Props> = ({
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value);
+  }
+
+  if (items.length === 0) {
+    return (
+      <div className={cn("", className)}>
+        <p className="mb-3 font-bold">{title}</p>
+
+        {new Array(limit).fill(0).map((_, index) => (
+          <Skeleton
+            key={index}
+            className="bg-gray-100 mb-3 rounded-[8px] h-6"
+          />
+        ))}
+
+        <Skeleton className="bg-gray-100 rounded-[8px] w-28 h-6" />
+      </div>
+    );
   }
 
   return (
@@ -61,12 +82,13 @@ export const FilterCheckoxGroup: React.FC<Props> = ({
       <div className="flex flex-col gap-4 pr-2 max-h-96 overflow-auto scrollbar">
         {list.map((item, index) => (
           <FilterCheckbox
+            name={name}
             text={item.text}
             value={item.value}
             key={index}
-            checked={false}
+            checked={selectedIds?.has(item.value)}
             endAdornment={item.endAdornment}
-            onCheckedChange={(bool) => console.log(bool)}
+            onCheckedChange={() => onClickCheckbox?.(item.value)}
           />
         ))}
       </div>
