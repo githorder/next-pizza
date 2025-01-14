@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
+import { useSet } from "react-use";
 
 import { cn } from "@/lib/utils";
 
 import { Title } from "./title";
-import { FilterCheckbox } from "./filter-checkbox";
 import { RangeSlider } from "./range-slider";
 import { Input } from "../ui";
 import { FilterCheckoxGroup } from "./filter-checkbox-group";
@@ -23,6 +23,9 @@ interface PriceProps {
 
 export const Filters: React.FC<Props> = ({ className }) => {
   const { ingredients, toggle, selectedIds } = useFilterIngredients();
+  const [sizes, { toggle: toggleSize }] = useSet<string>(new Set());
+  const [types, { toggle: toggleType }] = useSet<string>(new Set());
+
   const [price, setPrice] = React.useState<PriceProps>({
     priceFrom: 0,
     priceTo: 1000,
@@ -45,10 +48,30 @@ export const Filters: React.FC<Props> = ({ className }) => {
       <Title text="Фильтрация" size="sm" className="mb-5 font-bold" />
 
       {/* Верхние чекбоксы */}
-      <div className="flex flex-col gap-4">
-        <FilterCheckbox name="Можно собирать" text="Можно собирать" value="1" />
-        <FilterCheckbox name="Новинки" text="Новинки" value="2" />
-      </div>
+      <FilterCheckoxGroup
+        name="types"
+        title="Тип теста"
+        className="mt-5"
+        items={[
+          { text: "Тонкое", value: "1" },
+          { text: "Традиционное", value: "2" },
+        ]}
+        selected={types}
+        onClickCheckbox={toggleType}
+      />
+
+      <FilterCheckoxGroup
+        name="sizes"
+        title="Размеры"
+        className="mt-5"
+        items={[
+          { text: "20 см", value: "20" },
+          { text: "30 см", value: "30" },
+          { text: "40 см", value: "40" },
+        ]}
+        selected={sizes}
+        onClickCheckbox={toggleSize}
+      />
 
       {/* Фильтрация цен */}
       <div className="border-y border-y-neutral-100 mt-5 py-6 pb-7">
@@ -92,7 +115,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
         limit={6}
         items={items}
         defaultItems={items.slice(0, 6)}
-        selectedIds={selectedIds}
+        selected={selectedIds}
         onClickCheckbox={toggle}
       />
     </div>

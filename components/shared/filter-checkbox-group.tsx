@@ -13,14 +13,14 @@ type Item = FilterChecboxProps;
 interface Props {
   title: string;
   items: Item[];
-  defaultItems: Item[];
+  defaultItems?: Item[];
   limit?: number;
   searchInputPlaceholer?: string;
   onClickCheckbox?: (id: string) => void;
   defaultValue?: string[];
   className?: string;
   name: string;
-  selectedIds: Set<string>;
+  selected: Set<string>;
 }
 
 export const FilterCheckoxGroup: React.FC<Props> = ({
@@ -31,8 +31,7 @@ export const FilterCheckoxGroup: React.FC<Props> = ({
   limit = 5,
   searchInputPlaceholer = "Поиск...",
   onClickCheckbox,
-  defaultValue,
-  selectedIds,
+  selected,
   className,
 }) => {
   const [showAll, setShowAll] = React.useState(false);
@@ -42,7 +41,7 @@ export const FilterCheckoxGroup: React.FC<Props> = ({
     ? items.filter((item) =>
         item.text.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase())
       )
-    : defaultItems.slice(0, limit);
+    : (defaultItems || items).slice(0, limit);
 
   function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchValue(e.target.value);
@@ -86,7 +85,7 @@ export const FilterCheckoxGroup: React.FC<Props> = ({
             text={item.text}
             value={item.value}
             key={index}
-            checked={selectedIds?.has(item.value)}
+            checked={selected?.has(item.value)}
             endAdornment={item.endAdornment}
             onCheckedChange={() => onClickCheckbox?.(item.value)}
           />
