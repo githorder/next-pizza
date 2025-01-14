@@ -19,6 +19,7 @@ model User {
     updatedAt        DateTime          @updatedAt
     cart             Cart?
     verificationCode VerificationCode?
+    verified         DateTime?
     orders           Order[]
 }
 
@@ -45,8 +46,8 @@ model Product {
 model ProductItem {
     id        Int        @id @default(autoincrement())
     price     Int
-    size      String?
-    type      String?
+    size      Int?
+    type      Int?
     product   Product    @relation(fields: [productId], references: [id])
     productId Int
     createdAt DateTime   @default(now())
