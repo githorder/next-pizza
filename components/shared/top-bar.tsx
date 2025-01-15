@@ -1,5 +1,5 @@
 import React from "react";
-import { Category } from "@prisma/client";
+import { Category, Product } from "@prisma/client";
 
 import { cn } from "@/lib/utils";
 
@@ -7,9 +7,13 @@ import { Container } from "./container";
 import { Categories } from "./categories";
 import { SortPopup } from "./sort-popup";
 
+interface CategoryWithProducts extends Category {
+  products: Product[];
+}
+
 interface Props {
   className?: string;
-  categories: Category[];
+  categories: CategoryWithProducts[];
 }
 
 export const TopBar: React.FC<Props> = ({ className, categories }) => {
@@ -21,7 +25,9 @@ export const TopBar: React.FC<Props> = ({ className, categories }) => {
       )}
     >
       <Container className="flex justify-between items-center">
-        <Categories items={categories} />
+        <Categories
+          items={categories.filter((category) => category.products.length > 0)}
+        />
         <SortPopup />
       </Container>
     </div>
