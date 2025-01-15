@@ -7,7 +7,7 @@ import QueryString from "qs";
 
 import { FilterProps } from "./use-filters";
 
-import { FILTER } from "./constants";
+import { FILTER } from "../constants";
 
 export function useQueryFilters(queryParams: FilterProps): void {
   const router = useRouter();

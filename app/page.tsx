@@ -1,3 +1,5 @@
+import { prisma } from "@/prisma/prisma-client";
+
 import {
   Container,
   Filters,
@@ -6,14 +8,18 @@ import {
   TopBar,
 } from "@/components/shared";
 
-export default function Home() {
+export default async function Home() {
+  const categories = await prisma.category.findMany({
+    include: { products: { include: { ingredients: true, items: true } } },
+  });
+
   return (
     <>
       <Container className="mt-10">
         <Title text="Все пиццы" size="lg" className="font-extrabold" />
       </Container>
 
-      <TopBar />
+      <TopBar categories={categories} />
 
       <Container className="mt-10 pb-14">
         <div className="flex gap-[80px]">
@@ -25,89 +31,18 @@ export default function Home() {
           {/* Список продуктов */}
           <div className="flex-1">
             <div className="flex flex-col gap-16">
-              <ProductsGroupList
-                title="Пиццы"
-                products={[
-                  {
-                    id: 1,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                  {
-                    id: 2,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                  {
-                    id: 3,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                  {
-                    id: 4,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                  {
-                    id: 5,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                ]}
-                categoryId={1}
-              />
-
-              <ProductsGroupList
-                title="Комбо"
-                products={[
-                  {
-                    id: 1,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                  {
-                    id: 2,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                  {
-                    id: 3,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                  {
-                    id: 4,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                  {
-                    id: 5,
-                    name: "Маргарита",
-                    imageUrl:
-                      "https://media.dodostatic.net/image/r:292x292/11ee89722ed2d2f992155a94fa4d383a.avif",
-                    productItems: [{ price: 550 }],
-                  },
-                ]}
-                categoryId={2}
-              />
+              {categories.length > 0
+                ? categories.map((category) => {
+                    return (
+                      <ProductsGroupList
+                        key={category.id}
+                        title={category.name}
+                        products={category.products}
+                        categoryId={category.id}
+                      />
+                    );
+                  })
+                : null}
             </div>
           </div>
         </div>

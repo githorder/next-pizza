@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 import React from "react";
 import { useSet } from "react-use";
 
-import { FILTER } from "./constants";
+import { FILTER } from "../constants";
 
 interface PriceProps {
   priceFrom?: number | null;
