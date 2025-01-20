@@ -13,3 +13,4 @@ export { ProductsGroupList } from "./products-group-list";
 export { SearchInput } from "./search-input";
 export { PizzaImage } from "./pizza-image";
 export { GroupVariants } from "./group-variants";
+export { ChooseProductModal } from "./modals";

@@ -1,6 +1,17 @@
 export { Button } from "./button";
 export { Checkbox } from "./checkbox";
-export { Dialog } from "./dialog";
+export {
+  Dialog,
+  DialogPortal,
+  DialogOverlay,
+  DialogTrigger,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+} from "./dialog";
 export { Drawer } from "./drawer";
 export { Input } from "./input";
 export { Popover } from "./popover";

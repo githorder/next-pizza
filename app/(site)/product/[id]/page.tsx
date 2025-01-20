@@ -40,19 +40,13 @@ export default async function Home({ className, params: { id } }: Props) {
 
   return (
     <Container className="flex flex-col my-10">
-      <div className={cn(className, "flex flex-1")}>
+      <div className={cn(className, "flex flex-1 min-h-[500px] h-[500px]")}>
         <PizzaImage name={product.name} imageUrl={product.imageUrl} size={40} />
 
         <div className="bg-[#f7f6f5] p-7 w-[490px]">
-          <Title
-            text={product.name}
-            size="md"
-            className="mb-1 font-extrabold"
-          />
+          <Title text={product.name} size="md" className="font-extrabold" />
 
-          <p className="text-gray-400">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit..
-          </p>
+          <p className="text-gray-400 text-sm">30 см, традиционное тесто</p>
 
           <div className="flex flex-col gap-4 mt-5">
             <GroupVariants
